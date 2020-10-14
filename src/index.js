@@ -37,8 +37,29 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+function chunkString(str, length) {
+    return str.match(new RegExp('.{1,' + length + '}', 'g'));
+}
+
 function decode(expr) {
     // write your solution here
+    let output = "";
+    chunkString(expr, 10).forEach(element => {
+        if (element === "**********") {
+            output += " "
+            return
+        }
+        let temp = ""
+        chunkString(parseInt(element).toString(), 2).forEach(key => {
+            if (key === "10") {
+                temp += ".";
+            } else {
+                temp += "-";
+            }
+        })
+        output += MORSE_TABLE[temp]
+    });
+    return output;
 }
 
 module.exports = {
